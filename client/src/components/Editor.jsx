@@ -20,6 +20,23 @@ const Editor = () => {
     }
   }, [activeNoteId]);
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+        if (localNote) {
+          debouncedSave(activeNoteId, localNote);
+        }
+      } else if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
+        e.preventDefault();
+        useNoteStore.getState().createNote();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [localNote, activeNoteId, debouncedSave]);
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSave = useCallback(
     debounce((id, data) => {
