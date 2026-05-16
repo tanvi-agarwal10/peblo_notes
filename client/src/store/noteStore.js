@@ -17,6 +17,17 @@ export const useNoteStore = create((set, get) => ({
     }
   },
 
+  searchNotes: async (query) => {
+    if (!query) return get().fetchNotes();
+    set({ isLoading: true });
+    try {
+      const response = await api.get(`/notes/search?q=${query}`);
+      set({ notes: response.data, isLoading: false });
+    } catch (error) {
+      set({ error: error.message, isLoading: false });
+    }
+  },
+
   createNote: async () => {
     try {
       const response = await api.post('/notes');

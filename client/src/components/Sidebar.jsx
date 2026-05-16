@@ -2,6 +2,7 @@ import { FileText, Clock, Archive, Share2, BarChart2, Plus, LogOut } from 'lucid
 import { useAuthStore } from '../store/authStore';
 import { useNoteStore } from '../store/noteStore';
 import { motion } from 'framer-motion';
+import SmartSearch from './SmartSearch';
 
 const Sidebar = () => {
   const { user, logout } = useAuthStore();
@@ -27,6 +28,10 @@ const Sidebar = () => {
         >
           <Plus className="w-4 h-4" /> New Note
         </button>
+      </div>
+      
+      <div className="mt-2">
+        <SmartSearch />
       </div>
 
       <div className="flex-1 overflow-y-auto mt-4 px-3 space-y-1">

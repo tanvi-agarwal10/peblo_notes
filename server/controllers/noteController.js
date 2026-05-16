@@ -55,3 +55,33 @@ export const deleteNote = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const searchNotes = async (req, res) => {
+  try {
+    const { q } = req.query;
+    const notes = await Note.find({
+      createdBy: req.user._id,
+      $or: [
+        { title: { $regex: q, $options: 'i' } },
+        { content: { $regex: q, $options: 'i' } },
+        { tags: { $regex: q, $options: 'i' } }
+      ]
+    }).sort({ updatedAt: -1 });
+    res.json(notes);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getNotesByTag = async (req, res) => {
+  try {
+    const { tag } = req.params;
+    const notes = await Note.find({
+      createdBy: req.user._id,
+      tags: tag
+    }).sort({ updatedAt: -1 });
+    res.json(notes);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
