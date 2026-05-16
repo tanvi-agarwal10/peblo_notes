@@ -2,10 +2,13 @@ import { useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import Editor from '../components/Editor';
 import AiAssistant from '../components/AiAssistant';
+import Dashboard from '../components/Dashboard';
 import { useNoteStore } from '../store/noteStore';
+import { useUiStore } from '../store/uiStore';
 
 const Workspace = () => {
   const { fetchNotes, isLoading } = useNoteStore();
+  const { currentView } = useUiStore();
 
   useEffect(() => {
     fetchNotes();
@@ -25,8 +28,8 @@ const Workspace = () => {
   return (
     <div className="flex h-screen w-full bg-[#0a0c10] text-white overflow-hidden">
       <Sidebar />
-      <Editor />
-      <AiAssistant />
+      {currentView === 'dashboard' ? <Dashboard /> : <Editor />}
+      {currentView === 'editor' && <AiAssistant />}
     </div>
   );
 };

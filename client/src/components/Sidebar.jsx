@@ -1,15 +1,23 @@
 import { FileText, Clock, Archive, Share2, BarChart2, Plus, LogOut } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { useNoteStore } from '../store/noteStore';
+import { useUiStore } from '../store/uiStore';
 import { motion } from 'framer-motion';
 import SmartSearch from './SmartSearch';
 
 const Sidebar = () => {
   const { user, logout } = useAuthStore();
   const { notes, activeNoteId, setActiveNote, createNote } = useNoteStore();
+  const { currentView, setView } = useUiStore();
 
   const handleCreate = async () => {
+    setView('editor');
     await createNote();
+  };
+
+  const handleNoteClick = (id) => {
+    setView('editor');
+    setActiveNote(id);
   };
 
   return (
@@ -36,19 +44,16 @@ const Sidebar = () => {
 
       <div className="flex-1 overflow-y-auto mt-4 px-3 space-y-1">
         <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 px-2">Menu</div>
-        <button className="w-full flex items-center gap-3 px-2 py-2 text-gray-300 hover:bg-[#1a1d24] rounded-lg transition">
+        <button 
+          onClick={() => setView('editor')}
+          className={`w-full flex items-center gap-3 px-2 py-2 rounded-lg transition ${currentView === 'editor' ? 'bg-[#1a1d24] text-[#00ffcc]' : 'text-gray-300 hover:bg-[#1a1d24]'}`}
+        >
           <FileText className="w-4 h-4" /> All Notes
         </button>
-        <button className="w-full flex items-center gap-3 px-2 py-2 text-gray-300 hover:bg-[#1a1d24] rounded-lg transition">
-          <Clock className="w-4 h-4" /> Recent
-        </button>
-        <button className="w-full flex items-center gap-3 px-2 py-2 text-gray-300 hover:bg-[#1a1d24] rounded-lg transition">
-          <Archive className="w-4 h-4" /> Archived
-        </button>
-        <button className="w-full flex items-center gap-3 px-2 py-2 text-gray-300 hover:bg-[#1a1d24] rounded-lg transition">
-          <Share2 className="w-4 h-4" /> Shared
-        </button>
-        <button className="w-full flex items-center gap-3 px-2 py-2 text-gray-300 hover:bg-[#1a1d24] rounded-lg transition">
+        <button 
+          onClick={() => setView('dashboard')}
+          className={`w-full flex items-center gap-3 px-2 py-2 rounded-lg transition ${currentView === 'dashboard' ? 'bg-[#1a1d24] text-[#00ffcc]' : 'text-gray-300 hover:bg-[#1a1d24]'}`}
+        >
           <BarChart2 className="w-4 h-4" /> Insights
         </button>
 
@@ -56,8 +61,8 @@ const Sidebar = () => {
         {notes.map(note => (
           <button 
             key={note._id}
-            onClick={() => setActiveNote(note._id)}
-            className={`w-full text-left px-2 py-2 rounded-lg transition truncate ${activeNoteId === note._id ? 'bg-[#1a1d24] text-[#00ffcc]' : 'text-gray-400 hover:bg-[#1a1d24]'}`}
+            onClick={() => handleNoteClick(note._id)}
+            className={`w-full text-left px-2 py-2 rounded-lg transition truncate ${activeNoteId === note._id && currentView === 'editor' ? 'bg-[#1a1d24] text-[#00ffcc]' : 'text-gray-400 hover:bg-[#1a1d24]'}`}
           >
             {note.title || 'Untitled Note'}
           </button>
