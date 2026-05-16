@@ -58,15 +58,20 @@ const Sidebar = () => {
         </button>
 
         <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mt-6 mb-2 px-2">Notes</div>
-        {notes.map(note => (
-          <button 
-            key={note._id}
-            onClick={() => handleNoteClick(note._id)}
-            className={`w-full text-left px-2 py-2 rounded-lg transition truncate ${activeNoteId === note._id && currentView === 'editor' ? 'bg-[#1a1d24] text-[#00ffcc]' : 'text-gray-400 hover:bg-[#1a1d24]'}`}
-          >
-            {note.title || 'Untitled Note'}
-          </button>
-        ))}
+        
+        {notes.length === 0 ? (
+          <div className="px-2 text-sm text-gray-500 italic">No notes found</div>
+        ) : (
+          notes.map(note => (
+            <button 
+              key={note._id}
+              onClick={() => handleNoteClick(note._id)}
+              className={`w-full text-left px-2 py-2 rounded-lg transition truncate ${activeNoteId === note._id && currentView === 'editor' ? 'bg-[#1a1d24] text-[#00ffcc]' : 'text-gray-400 hover:bg-[#1a1d24]'}`}
+            >
+              {note.title || 'Untitled Note'}
+            </button>
+          ))
+        )}
       </div>
 
       <div className="p-4 border-t border-gray-800">
