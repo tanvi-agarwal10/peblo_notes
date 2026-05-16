@@ -68,5 +68,17 @@ export const useNoteStore = create((set, get) => ({
     }
   },
 
+  shareNote: async (id) => {
+    try {
+      const response = await api.post(`/notes/${id}/share`);
+      set((state) => ({
+        notes: state.notes.map(note => note._id === id ? response.data : note)
+      }));
+      return response.data.shareId;
+    } catch (error) {
+      set({ error: error.message });
+    }
+  },
+
   setActiveNote: (id) => set({ activeNoteId: id }),
 }));

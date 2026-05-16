@@ -3,7 +3,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useNoteStore } from '../store/noteStore';
 import { debounce } from 'lodash';
-import { Save, CheckCircle, Trash2 } from 'lucide-react';
+import { Save, CheckCircle, Trash2, Share2, FileText } from 'lucide-react';
 
 const Editor = () => {
   const { notes, activeNoteId, updateNote, deleteNote } = useNoteStore();
@@ -68,6 +68,20 @@ const Editor = () => {
             {savingStatus === 'saving' && <><Save className="w-4 h-4 animate-pulse" /> Saving...</>}
             {savingStatus === 'saved' && <><CheckCircle className="w-4 h-4 text-[#00ffcc]" /> Saved</>}
           </div>
+          <button 
+            onClick={async () => {
+              const shareId = await useNoteStore.getState().shareNote(activeNoteId);
+              if (shareId) {
+                const url = `${window.location.origin}/shared/${shareId}`;
+                navigator.clipboard.writeText(url);
+                alert('Public link copied to clipboard!');
+              }
+            }}
+            className="p-2 text-gray-500 hover:text-[#00ffcc] hover:bg-[#00ffcc]/10 rounded-lg transition"
+            title="Share Publicly"
+          >
+            <Share2 className="w-5 h-5" />
+          </button>
           <button 
             onClick={() => deleteNote(activeNoteId)}
             className="p-2 text-gray-500 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition"

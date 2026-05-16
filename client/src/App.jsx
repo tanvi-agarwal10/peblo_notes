@@ -4,6 +4,7 @@ import { useAuthStore } from './store/authStore';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import ProtectedRoute from './components/ProtectedRoute';
+import PublicNote from './pages/PublicNote';
 
 import Workspace from './pages/Workspace';
 
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/shared/:shareId" element={<PublicNote />} />
         <Route 
           path="/*" 
           element={

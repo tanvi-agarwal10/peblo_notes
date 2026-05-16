@@ -85,3 +85,27 @@ export const getNotesByTag = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+import { v4 as uuidv4 } from 'uuid';
+
+export const shareNote = async (req, res) => {
+  try {
+    const note = await Note.findById(req.params.id);
+    if (!note) {
+      return res.status(404).json({ message: 'Note not found' });
+    }
+    if (note.createdBy.toString() !== req.user._id.toString()) {
+      return res.status(401).json({ message: 'Not authorized' });
+    }
+    
+    note.isPublic = true;
+    if (!note.shareId) {
+      note.shareId = uuidv4();
+    }
+    
+    await note.save();
+    res.json(note);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

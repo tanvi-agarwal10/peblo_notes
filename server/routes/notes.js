@@ -1,5 +1,5 @@
 import express from 'express';
-import { getNotes, createNote, updateNote, deleteNote, searchNotes, getNotesByTag } from '../controllers/noteController.js';
+import { getNotes, createNote, updateNote, deleteNote, searchNotes, getNotesByTag, shareNote } from '../controllers/noteController.js';
 import { generateAiInsights } from '../controllers/aiController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
@@ -15,6 +15,7 @@ router.route('/')
   .post(createNote);
 
 router.post('/:id/generate-ai', generateAiInsights);
+router.post('/:id/share', shareNote);
 
 router.route('/:id')
   .put(updateNote)

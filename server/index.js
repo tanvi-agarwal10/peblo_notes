@@ -7,6 +7,7 @@ import morgan from 'morgan';
 
 import authRoutes from './routes/auth.js';
 import noteRoutes from './routes/notes.js';
+import publicRoutes from './routes/public.js';
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use(morgan('dev'));
 // Routes
 app.use('/auth', authRoutes);
 app.use('/notes', noteRoutes);
+app.use('/shared', publicRoutes);
 
 // Database connection
 const PORT = process.env.PORT || 5000;
