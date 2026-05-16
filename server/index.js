@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 
 import authRoutes from './routes/auth.js';
+import noteRoutes from './routes/notes.js';
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(morgan('dev'));
 
 // Routes
 app.use('/auth', authRoutes);
+app.use('/notes', noteRoutes);
 
 // Database connection
 const PORT = process.env.PORT || 5000;
