@@ -1,0 +1,50 @@
+@import "tailwindcss";
+@import "react-quill/dist/quill.snow.css";
+
+@theme {
+  --color-neon-accent: #00ffcc;
+  --color-glass-bg: rgba(255, 255, 255, 0.05);
+  --color-glass-border: rgba(255, 255, 255, 0.1);
+  --color-dark-bg: #0f1115;
+  --color-dark-card: #1a1d24;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-dark-bg);
+  color: #ffffff;
+}
+
+.glass-panel {
+  background: var(--color-glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 12px;
+}
+
+.neon-text {
+  color: var(--color-neon-accent);
+  text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+}
+
+.ql-toolbar.ql-snow, .ql-container.ql-snow {
+  border-color: rgba(255,255,255,0.1) !important;
+}
+
+.ql-toolbar.ql-snow .ql-picker-label, .ql-toolbar.ql-snow .ql-picker-item, .ql-snow .ql-stroke {
+  color: #e2e8f0 !important;
+  stroke: #e2e8f0 !important;
+}
+
+.ql-snow .ql-fill, .ql-snow .ql-stroke.ql-fill {
+  fill: #e2e8f0 !important;
+}
+
+.ql-editor.ql-blank::before {
+  color: rgba(255,255,255,0.4) !important;
+}
