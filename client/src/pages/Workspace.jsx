@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import Editor from '../components/Editor';
+import AiAssistant from '../components/AiAssistant';
 import { useNoteStore } from '../store/noteStore';
 
 const Workspace = () => {
@@ -25,7 +26,7 @@ const Workspace = () => {
     <div className="flex h-screen w-full bg-[#0a0c10] text-white overflow-hidden">
       <Sidebar />
       <Editor />
-      {/* AI Assistant panel will go here later */}
+      <AiAssistant />
     </div>
   );
 };
