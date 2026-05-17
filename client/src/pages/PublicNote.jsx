@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Loader } from 'lucide-react';
-import 'react-quill/dist/quill.bubble.css';
-import ReactQuill from 'react-quill';
+import 'react-quill-new/dist/quill.bubble.css';
+import ReactQuill from 'react-quill-new';
 
 const PublicNote = () => {
   const { shareId } = useParams();
@@ -14,7 +14,7 @@ const PublicNote = () => {
   useEffect(() => {
     const fetchNote = async () => {
       try {
-        const url = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        const url = import.meta.env.VITE_API_URL || 'http://localhost:5001';
         const response = await axios.get(`${url}/shared/${shareId}`);
         setNote(response.data);
       } catch (err) {

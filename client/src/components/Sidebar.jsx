@@ -1,11 +1,11 @@
-import { FileText, Clock, Archive, Share2, BarChart2, Plus, LogOut } from 'lucide-react';
+import { FileText, Clock, Archive, Share2, BarChart2, Plus, LogOut, X } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { useNoteStore } from '../store/noteStore';
 import { useUiStore } from '../store/uiStore';
 import { motion } from 'framer-motion';
 import SmartSearch from './SmartSearch';
 
-const Sidebar = () => {
+const Sidebar = ({ onClose }) => {
   const { user, logout } = useAuthStore();
   const { notes, activeNoteId, setActiveNote, createNote } = useNoteStore();
   const { currentView, setView } = useUiStore();
@@ -26,7 +26,10 @@ const Sidebar = () => {
         <div className="w-8 h-8 rounded bg-gradient-to-br from-[#00ffcc] to-blue-500 flex items-center justify-center">
           <span className="text-black font-bold text-sm">P</span>
         </div>
-        <span className="font-bold text-lg neon-text">Peblo AI Notes</span>
+        <span className="font-bold text-lg neon-text flex-1">Peblo AI Notes</span>
+        <button onClick={onClose} className="md:hidden p-1 hover:bg-gray-800 rounded">
+          <X className="w-5 h-5 text-gray-500" />
+        </button>
       </div>
 
       <div className="px-4 py-2">

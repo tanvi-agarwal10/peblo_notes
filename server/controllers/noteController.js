@@ -1,4 +1,5 @@
 import Note from '../models/Note.js';
+import { v4 as uuidv4 } from 'uuid';
 
 export const getNotes = async (req, res) => {
   try {
@@ -59,12 +60,17 @@ export const deleteNote = async (req, res) => {
 export const searchNotes = async (req, res) => {
   try {
     const { q } = req.query;
+    if (!q) return res.json([]);
+
+    // Escape special regex characters
+    const safeQuery = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
     const notes = await Note.find({
       createdBy: req.user._id,
       $or: [
-        { title: { $regex: q, $options: 'i' } },
-        { content: { $regex: q, $options: 'i' } },
-        { tags: { $regex: q, $options: 'i' } }
+        { title: { $regex: safeQuery, $options: 'i' } },
+        { content: { $regex: safeQuery, $options: 'i' } },
+        { tags: { $regex: safeQuery, $options: 'i' } }
       ]
     }).sort({ updatedAt: -1 });
     res.json(notes);
@@ -85,8 +91,6 @@ export const getNotesByTag = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
-import { v4 as uuidv4 } from 'uuid';
 
 export const shareNote = async (req, res) => {
   try {
