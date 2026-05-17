@@ -1,6 +1,6 @@
 import express from 'express';
 import { getNotes, createNote, updateNote, deleteNote, searchNotes, getNotesByTag, shareNote } from '../controllers/noteController.js';
-import { generateAiInsights } from '../controllers/aiController.js';
+import { generateAiInsights, processAiAction } from '../controllers/aiController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
@@ -15,6 +15,7 @@ router.route('/')
   .post(createNote);
 
 router.post('/:id/generate-ai', generateAiInsights);
+router.post('/:id/ai-action', processAiAction);
 router.post('/:id/share', shareNote);
 
 router.route('/:id')

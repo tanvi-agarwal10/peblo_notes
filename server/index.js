@@ -26,8 +26,16 @@ app.use('/notes', noteRoutes);
 app.use('/shared', publicRoutes);
 app.use('/dashboard', dashboardRoutes);
 
+// Error Handling Middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  const status = err.status || 500;
+  const message = err.message || 'Internal Server Error';
+  res.status(status).json({ message });
+});
+
 // Database connection
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 const DB_URL = process.env.DATABASE_URL || 'mongodb://localhost:27017/peblo_notes';
 
 mongoose.connect(DB_URL)
